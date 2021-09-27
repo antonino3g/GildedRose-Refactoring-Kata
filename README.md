@@ -7,7 +7,7 @@
   </a>
 </p>
 
-# :memo: 1) Simple note of resume what was done:
+## :memo: 1) Simple note of resume what was done:
 
 	1.1) Refactoring all variable named a as items[i];
 	
