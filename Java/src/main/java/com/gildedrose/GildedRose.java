@@ -17,24 +17,30 @@ class GildedRose {
         }
     }
 
-
     private void updateItemQuality(Item item) {
-        int degradeRate = item.name.equals(CONJURED) ? -2 : -1;
-        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES)) {
-            if (!item.name.equals(SULFURAS)) {
-                adjustmentQuality(item, degradeRate);
-            }
-        } else {
+        boolean isExpired = item.sellIn < 1; // default = 0;
+        int degradeRate = determineDegradeRate(item, isExpired);
+        boolean doesDegrade = !item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && !item.name.equals(SULFURAS);
+
+
+
+        if (doesDegrade) {
+            adjustmentQuality(item, degradeRate);
+        }
+
+        if (item.name.equals(AGED_BRIE)) {
             adjustmentQuality(item, 1);
 
-            if (item.name.equals(BACKSTAGE_PASSES)) {
-                if (item.sellIn < 11) {
-                    adjustmentQuality(item, 1);
-                }
+        }
+        if (item.name.equals(BACKSTAGE_PASSES)) {
+            adjustmentQuality(item, 1);
 
-                if (item.sellIn < 6) {
-                    adjustmentQuality(item, 1);
-                }
+            if (item.sellIn < 11) {
+                adjustmentQuality(item, 1);
+            }
+
+            if (item.sellIn < 6) {
+                adjustmentQuality(item, 1);
             }
         }
 
@@ -42,19 +48,18 @@ class GildedRose {
             item.sellIn = item.sellIn - 1;
         }
 
-        if (item.sellIn < 0) {
-            if (!item.name.equals(AGED_BRIE)) {
-                if (!item.name.equals(BACKSTAGE_PASSES)) {
-                    if (!item.name.equals(SULFURAS)) {
-                        adjustmentQuality(item, degradeRate);
-                    }
-                } else {
-                    item.quality = item.quality - item.quality;
-                }
-            } else {
+        if (isExpired) {
+            if (item.name.equals(AGED_BRIE)) {
                 adjustmentQuality(item, 1);
+            } else if (item.name.equals(BACKSTAGE_PASSES)) {
+                    item.quality = item.quality - item.quality;
             }
         }
+    }
+
+    private int determineDegradeRate(Item item, boolean isExpired) {
+        final int baseDegradeRate = item.name.equals(CONJURED) ? -2 : -1;
+        return isExpired ? baseDegradeRate * 2 : baseDegradeRate;
     }
 
     private void adjustmentQuality(Item item, int adjustment) {
