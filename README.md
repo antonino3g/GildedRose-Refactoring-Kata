@@ -28,3 +28,6 @@
 	
 	1.9) Created updateBackstagePassQuality() method;
 	
+
+## :magnet: Original Project
+- [https://github.com/emilybache/GildedRose-Refactoring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)	
