@@ -23,7 +23,6 @@ class GildedRose {
         boolean hasSellByDate = !item.name.equals(SULFURAS);
         boolean doesDegrade = !item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && hasSellByDate;
 
-
         if (doesDegrade) {
             adjustQuality(item, degradeRate);
         }
