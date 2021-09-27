@@ -20,40 +20,36 @@ class GildedRose {
     private void updateItemQuality(Item item) {
         boolean isExpired = item.sellIn < 1; // default = 0;
         int degradeRate = determineDegradeRate(item, isExpired);
-        boolean doesDegrade = !item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && !item.name.equals(SULFURAS);
+        boolean hasSellByDate = !item.name.equals(SULFURAS);
+        boolean doesDegrade = !item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES) && hasSellByDate;
 
 
         if (doesDegrade) {
-            adjustmentQuality(item, degradeRate);
+            adjustQuality(item, degradeRate);
         }
 
         if (item.name.equals(AGED_BRIE)) {
-            adjustmentQuality(item, 1);
-
+            int adjustment = isExpired ? 2 : 1;
+            adjustQuality(item, adjustment);
         }
+
         if (item.name.equals(BACKSTAGE_PASSES)) {
             updateBackstagePassQuality(item, isExpired);
         }
 
-        if (!item.name.equals(SULFURAS)) {
+        if (hasSellByDate) {
             item.sellIn = item.sellIn - 1;
-        }
-
-        if (isExpired) {
-            if (item.name.equals(AGED_BRIE)) {
-                adjustmentQuality(item, 1);
-            }
         }
     }
 
     private void updateBackstagePassQuality(Item item, boolean isExpired) {
-        adjustmentQuality(item, 1);
+        adjustQuality(item, 1);
         if (item.sellIn < 11) {
-            adjustmentQuality(item, 1);
+            adjustQuality(item, 1);
         }
 
         if (item.sellIn < 6) {
-            adjustmentQuality(item, 1);
+            adjustQuality(item, 1);
         }
         if (isExpired) {
             item.quality = item.quality - item.quality;
@@ -65,7 +61,7 @@ class GildedRose {
         return isExpired ? baseDegradeRate * 2 : baseDegradeRate;
     }
 
-    private void adjustmentQuality(Item item, int adjustment) {
+    private void adjustQuality(Item item, int adjustment) {
         int newQuality = item.quality + adjustment;
         boolean isValidRange = newQuality <= 50 && newQuality >= 0;
         if (isValidRange) {
