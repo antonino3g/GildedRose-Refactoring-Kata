@@ -28,6 +28,14 @@
 	
 	1.9) Created updateBackstagePassQuality() method;
 	
+<br />
 
 ## :magnet: Original Project
 - [https://github.com/emilybache/GildedRose-Refactoring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)	
+
+
+<br />
+
+## :earth_americas: :octocat: Repositories Support  
+- [raymyers](https://github.com/craftvscruft/refactoring-challenge)
+- [Christian Clausen](https://www.youtube.com/watch?v=F5OILX_sI5c)
